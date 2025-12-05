@@ -66,7 +66,7 @@ def prepare_data(sales_combined):
 
 
     # Combine encoded columns with numeric predictors
-    final_df = pd.concat([sales_combined[['all_time_peak', 'last_30_day_avg', 'Year', 'Global_Sales']], platform_encoded, genre_encoded], axis=1)
+    final_df = pd.concat([sales_combined[['all_time_peak', 'last_30_day_avg', 'Year', 'Rank', 'Global_Sales']], platform_encoded, genre_encoded], axis=1)
     final_df = final_df.dropna(subset=['Year'])
     return final_df
 
@@ -88,8 +88,8 @@ def rf_fit(final_df, area):
 
     # Scale numeric features
     scaler = StandardScaler()
-    X_train[['all_time_peak', 'last_30_day_avg', 'Year']] = scaler.fit_transform(X_train[['all_time_peak', 'last_30_day_avg', 'Year']])
-    X_test[['all_time_peak', 'last_30_day_avg', 'Year']] = scaler.transform(X_test[['all_time_peak', 'last_30_day_avg', 'Year']])
+    X_train[['all_time_peak', 'last_30_day_avg', 'Year', 'Rank']] = scaler.fit_transform(X_train[['all_time_peak', 'last_30_day_avg', 'Year', 'Rank']])
+    X_test[['all_time_peak', 'last_30_day_avg', 'Year', 'Rank']] = scaler.transform(X_test[['all_time_peak', 'last_30_day_avg', 'Year', 'Rank']])
 
     model = RandomForestRegressor(random_state=42)
 
