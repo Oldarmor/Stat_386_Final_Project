@@ -1,8 +1,15 @@
+[build-system]
+requires = ["uv_build >= 0.9.5, <0.10.0"]
+build-backend = "uv_build"
+
 [project]
 name = "stat-386-final-project"
 version = "0.1.0"
-description = "Add your description here"
+description = "Statistical analysis of video game sales data with preprocessing, visualization, and predictive modeling"
+authors = [{name = "Adam Britner and Corbin Christiansen", email = "your.email@example.com"}]
 readme = "README.md"
+license = {text = "MIT"}
+keywords = ["statistics", "data-analysis", "sales-prediction"]
 requires-python = ">=3.13"
 dependencies = [
     "matplotlib>=3.10.7",
@@ -12,3 +19,15 @@ dependencies = [
     "scikit-learn>=1.7.2",
     "seaborn>=0.13.2",
 ]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+stat-386-final-project = ["data/*.csv"]
+
+
+[project.urls]
+Homepage = "https://github.com/yourusername/hello-uv-yourname"
+Repository = "https://github.com/yourusername/hello-uv-yourname.git"
+Issues = "https://github.com/yourusername/hello-uv-yourname/issues"
