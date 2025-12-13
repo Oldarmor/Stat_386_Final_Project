@@ -34,5 +34,5 @@ where = ["src"]
 
 [project.urls]
 Homepage = "https://github.com/yourusername/hello-uv-yourname"
-Repository = "https://github.com/yourusername/hello-uv-yourname.git"
+Repository = "https://github.com/Oldarmor/Stat_386_Final_Project"
 Issues = "https://github.com/yourusername/hello-uv-yourname/issues"

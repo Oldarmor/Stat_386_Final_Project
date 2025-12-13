@@ -25,8 +25,36 @@ _TODO: Describe the motivation, stakeholders, and success criteria for this anal
 4. _Tooling:_ `TODO - list packages, environments, and reproducibility steps`
 
 ## Results & Diagnostics
+### Best Hyperparameters:
 
-_TODO: Summarize the main metrics, charts, or model diagnostics produced. Include links to figures or tables once available._
+max_depth: 10
+min_samples_leaf: 1
+min_samples_split: 5
+n_estimators: 200
+
+### Performance Metrics:
+
+R² (Test Set): 0.6604
+RMSE (log scale): 0.1269
+
+### Feature Importance (Top 10):
+
+Rank – 0.2906
+Platform_X360 – 0.1819
+last_30_day_avg – 0.1439
+all_time_peak – 0.0575
+Platform_PS3 – 0.0537
+Platform_SAT – 0.0359
+Platform_PS2 – 0.0356
+Year – 0.0319
+Platform_PC – 0.0297
+Platform_GC – 0.0287
+
+
+### Interpretation:
+
+Rank is the most influential predictor, followed by platform-specific indicators and recent activity metrics (last_30_day_avg).
+Genre features did not appear in the top 10, suggesting platform and ranking dominate sales prediction.
 
 ## Discussion & Next Steps
 
