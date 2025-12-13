@@ -54,3 +54,5 @@ htmlcov/
 *.csv
 !vgsales.csv
 !game_data.csv
+/.quarto/
+**/*.quarto_ipynb

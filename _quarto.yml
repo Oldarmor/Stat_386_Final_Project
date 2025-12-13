@@ -1,0 +1,34 @@
+
+project:
+  type: website
+  output-dir: docs
+  render:
+    - index.qmd
+    - Documentation.qmd
+    - Tutorial.qmd
+    - TechnicalReport.qmd
+
+
+website:
+  title: "website"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: Documentation.qmd
+        text: Documentation
+      - href: Tutorial.qmd
+        text: Tutorial
+      - href: TechnicalReport.qmd
+        text: Technical Report
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+    css: styles.css
+    toc: true
+
+
+
