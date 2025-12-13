@@ -13,9 +13,8 @@ _TODO: Describe the motivation, stakeholders, and success criteria for this anal
 
 ## Data Sources
 
-- _Primary dataset:_ `TODO - name and link`
-- _Supplementary data:_ `TODO - describe any external references`
-- _Data access notes:_ `TODO - mention licenses or refresh cadence`
+- _Primary dataset:_ [VG Sales Data](https://zenodo.org/records/5898311)
+- _Supplementary data:_ `Scraped player data from Steam using a `[Github Repo](https://github.com/solsticegamestudios/steam).`Because of the lengthy time scraping the data took, we have a file of how we scraped it and the scraped csv in the package.`
 
 ## Methodology
 
