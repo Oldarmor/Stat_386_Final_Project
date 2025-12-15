@@ -1,7 +1,65 @@
 ﻿---
 title: "Getting Started"
-jupyter: python3
+format: html
 ---
 
-This short tutorial shows how to install and use the `stat386_final` package for basic data loading, preprocessing, model training, prediction, and visualization.
+# Quick tutorial: Using the stat386_final package
 
+This short tutorial shows common workflows: reading the bundled data, processing it, training the Random Forest model, and plotting basic distributions.
+
+## Install
+
+Install the package in editable mode (for development) or normally:
+
+```bash
+pip install -e .
+# or
+pip install .
+```
+
+## Quickstart (Python)
+
+Copy the following into a Python session or script.
+
+```python
+from importlib.resources import files
+from stat386_final import (
+    read_data,
+    process_data,
+    prepare_data,
+    rf_fit,
+    print_genre_distribution,
+    print_platform_distribution,
+    __version__,
+)
+
+print('stat386_final version:', __version__)
+
+# Load the bundled example dataset
+data_path = files("stat386_final").joinpath("data/game_data.csv")
+sales = read_data(data_path)
+print(sales.shape)
+print(list(sales.columns)[:10])
+
+# Process and prepare for modeling
+sales_combined = process_data(sales)
+final_df = prepare_data(sales_combined)
+print('Prepared dataset shape:', final_df.shape)
+
+# Fit a Random Forest model to predict global sales
+# (This will run a small grid search and print metrics)
+model = rf_fit(final_df, 'Global_Sales')
+
+# Quick plots (shows matplotlib windows in notebooks or interactive sessions)
+print_genre_distribution(sales, 'Action', 'Global_Sales')
+print_platform_distribution(sales, 'PS4', 'Global_Sales')
+```
+
+## Notes about `predict`
+
+- The package exposes a `predict` helper. In the current release the training path performs scaling internally but does not return the fitted `StandardScaler`. To use `predict` reliably you should ensure new data is prepared and scaled the same way as `prepare_data` did during training. If you need a prediction pipeline (model + scaler), adapt `rf_fit` to return the scaler alongside the model or scale new observations with the same transformation used at training time.
+
+## Where to go next
+
+- See the package source for implementation details: [src/stat386_final](src/stat386_final)
+- If you want, I can: add a `train_pipeline` that returns `(model, scaler)`, add notebook examples, or run a quick import test in this environment.
