@@ -10,5 +10,7 @@ def read_data(file_path):
     """Reads data from a given file path as a csv."""
     sales = pd.read_csv(file_path)
     sales['Year'] = sales['Year'].astype('Int64')
-    sales.drop(columns=['Unnamed: 0'], inplace=True)
+    # Some CSVs may not include an index column named 'Unnamed: 0'. Drop it only if present.
+    if 'Unnamed: 0' in sales.columns:
+        sales.drop(columns=['Unnamed: 0'], inplace=True)
     return sales

@@ -3,15 +3,13 @@ requires = ["setuptools>=68.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "stat-386-final-project"
+name = "stat386_final"
 version = "0.1.5"
 description = "Statistical analysis of video game sales data with preprocessing, visualization, and predictive modeling"
-
 authors = [
   { name = "Adam Britner" },
   { name = "Corbin Christiansen" }
 ]
-
 readme = 'README.md'
 license = "MIT"
 keywords = ["statistics", "data-analysis", "sales-prediction"]

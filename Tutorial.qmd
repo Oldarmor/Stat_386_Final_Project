@@ -1,58 +1,7 @@
-
----
+﻿---
 title: "Getting Started"
 jupyter: python3
 ---
 
-Here is how you use my package:
+This short tutorial shows how to install and use the `stat386_final` package for basic data loading, preprocessing, model training, prediction, and visualization.
 
-```{python}
-# Core imports from the project's modules (as documented in Documentation.qmd)
-from read import get_data_path, read_data
-from preprocess import process_data, prepare_data
-from model import rf_fit, predict
-from viz import print_genre_distribution, print_platform_distribution
-
-# 1) Read a CSV file
-# If your data is packaged under a `data/` folder, use get_data_path; otherwise supply a direct path.
-try:
-    csv_path = get_data_path("sales.csv")
-except Exception:
-    # Fallback: change this to your actual CSV path if not using package resources
-    csv_path = "sales.csv"
-
-sales = read_data(csv_path)
-print("Loaded rows:", len(sales))
-print(sales.head(2))
-```
-
-```{python}
-# 2) Aggregate and prepare features
-sales_combined = process_data(sales)
-final_df = prepare_data(sales_combined)
-
-print("Aggregated rows:", len(sales_combined))
-print("Prepared feature matrix shape:", final_df.shape)
-```
-
-```{python}
-# 3) Train a Random Forest to predict Global_Sales (or another area column present in final_df)
-# Note: If you see an error about min_samples_split=1, adjust the grid in rf_fit to use values >= 2.
-best_model = rf_fit(final_df, area="Global_Sales")
-```
-
-```{python}
-# 4) Make predictions on new data (use the same feature columns as during training)
-X_new = final_df.drop(columns=["Global_Sales"]).iloc[:5]
-preds = predict(best_model, area="Global_Sales", new_data=X_new)
-print("Predictions (first 5):", preds[:5])
-```
-
-```{python}
-# 5) Visualize distributions for quick EDA
-# Plot the distribution of Global_Sales for a specific genre
-print_genre_distribution(sales, genre="Action", area="Global_Sales")
-
-# Plot the distribution of Global_Sales for a specific platform
-print_platform_distribution(sales, platform="PS4", area="Global_Sales")
-```

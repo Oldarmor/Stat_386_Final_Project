@@ -129,7 +129,13 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#project-context" id="toc-project-context" class="nav-link" data-scroll-target="#project-context">Project Context</a></li>
   <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data Sources</a></li>
   <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a></li>
-  <li><a href="#results-diagnostics" id="toc-results-diagnostics" class="nav-link" data-scroll-target="#results-diagnostics">Results &amp; Diagnostics</a></li>
+  <li><a href="#results-diagnostics" id="toc-results-diagnostics" class="nav-link" data-scroll-target="#results-diagnostics">Results &amp; Diagnostics</a>
+  <ul class="collapse">
+  <li><a href="#best-hyperparameters" id="toc-best-hyperparameters" class="nav-link" data-scroll-target="#best-hyperparameters">Best Hyperparameters:</a></li>
+  <li><a href="#performance-metrics" id="toc-performance-metrics" class="nav-link" data-scroll-target="#performance-metrics">Performance Metrics:</a></li>
+  <li><a href="#feature-importance-top-10" id="toc-feature-importance-top-10" class="nav-link" data-scroll-target="#feature-importance-top-10">Feature Importance (Top 10):</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation:</a></li>
+  </ul></li>
   <li><a href="#discussion-next-steps" id="toc-discussion-next-steps" class="nav-link" data-scroll-target="#discussion-next-steps">Discussion &amp; Next Steps</a></li>
   </ul>
 </nav>
@@ -172,9 +178,8 @@ ul.task-list li input[type="checkbox"] {
 <section id="data-sources" class="level2">
 <h2 class="anchored" data-anchor-id="data-sources">Data Sources</h2>
 <ul>
-<li><em>Primary dataset:</em> <code>TODO - name and link</code></li>
-<li><em>Supplementary data:</em> <code>TODO - describe any external references</code></li>
-<li><em>Data access notes:</em> <code>TODO - mention licenses or refresh cadence</code></li>
+<li><em>Primary dataset:</em> <a href="https://zenodo.org/records/5898311">VG Sales Data</a></li>
+<li><em>Supplementary data:</em> <code>Scraped player data from Steam using a</code><a href="https://github.com/solsticegamestudios/steam">Github Repo</a>.<code>Because of the lengthy time scraping the data took, we have a file of how we scraped it and the scraped csv in the package.</code></li>
 </ul>
 </section>
 <section id="methodology" class="level2">
@@ -188,7 +193,22 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="results-diagnostics" class="level2">
 <h2 class="anchored" data-anchor-id="results-diagnostics">Results &amp; Diagnostics</h2>
-<p><em>TODO: Summarize the main metrics, charts, or model diagnostics produced. Include links to figures or tables once available.</em></p>
+<section id="best-hyperparameters" class="level3">
+<h3 class="anchored" data-anchor-id="best-hyperparameters">Best Hyperparameters:</h3>
+<p>max_depth: 10 min_samples_leaf: 1 min_samples_split: 5 n_estimators: 200</p>
+</section>
+<section id="performance-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="performance-metrics">Performance Metrics:</h3>
+<p>R² (Test Set): 0.6604 RMSE (log scale): 0.1269</p>
+</section>
+<section id="feature-importance-top-10" class="level3">
+<h3 class="anchored" data-anchor-id="feature-importance-top-10">Feature Importance (Top 10):</h3>
+<p>Rank – 0.2906 Platform_X360 – 0.1819 last_30_day_avg – 0.1439 all_time_peak – 0.0575 Platform_PS3 – 0.0537 Platform_SAT – 0.0359 Platform_PS2 – 0.0356 Year – 0.0319 Platform_PC – 0.0297 Platform_GC – 0.0287</p>
+</section>
+<section id="interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="interpretation">Interpretation:</h3>
+<p>Rank is the most influential predictor, followed by platform-specific indicators and recent activity metrics (last_30_day_avg). Genre features did not appear in the top 10, suggesting platform and ranking dominate sales prediction.</p>
+</section>
 </section>
 <section id="discussion-next-steps" class="level2">
 <h2 class="anchored" data-anchor-id="discussion-next-steps">Discussion &amp; Next Steps</h2>
