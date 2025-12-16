@@ -48,9 +48,14 @@ print('Prepared dataset shape:', final_df.shape)
 
 # Fit a Random Forest model to predict global sales
 # (This will run a small grid search and print metrics)
-model = rf_fit(final_df, 'Global_Sales')
+# `rf_fit` returns a tuple `(best_model, scaler)` — keep the scaler
+# to use when scaling new data for `predict()`.
+best_model, scaler = rf_fit(final_df, 'Global_Sales')
 
 # Quick plots (shows matplotlib windows in notebooks or interactive sessions)
 print_genre_distribution(sales, 'Action', 'Global_Sales')
 print_platform_distribution(sales, 'PS4', 'Global_Sales')
+
+# Example: making predictions on new data (use the returned `scaler`)
+# preds = predict(best_model, area='Global_Sales', new_data=new_X, scaler=scaler)
 ```

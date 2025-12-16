@@ -92,40 +92,41 @@ final_df = prepare_data(sales_combined)
 # Module: `model.py`
 
 ## `rf_fit(final_df, area)`
-**Purpose:** Train a `RandomForestRegressor` to predict `area` using 3-fold `GridSearchCV`. Splits data, scales numeric features on the training set, logs target via `np.log1p`, evaluates on test, prints metrics and feature importances, returns best estimator. 
+**Purpose:** Train a `RandomForestRegressor` to predict `area` using 3-fold `GridSearchCV`. The function splits the data, scales numeric features on the training set, logs the target via `np.log1p`, evaluates on a held-out test set, prints metrics and feature importances, and returns the trained estimator together with the fitted `StandardScaler` used for numeric features.
 
 **Key steps:**
 - Split: `train_test_split(test_size=0.2, random_state=42)`
-- Scale: `StandardScaler` on `['all_time_peak', 'last_30_day_avg', 'Year', 'Rank']`
-- Grid: `n_estimators=[50,100,200]`, `max_depth=[5,10,15]`, `min_samples_split=[1,3,5]`, `min_samples_leaf=[1,2,3]` (note: `min_samples_split` must be ≥2) 
+- Scale: `StandardScaler` is fit on the training set for the numeric features `['all_time_peak', 'last_30_day_avg', 'Year']` (the scaler is returned so it can be reused when preparing new data for prediction).
+- Grid: `n_estimators=[50,100,200]`, `max_depth=[5,10,15]`, `min_samples_split=[2,3,5]`, `min_samples_leaf=[1,2,3]`
 
 **Returns:**
-- `best_model` *(RandomForestRegressor)* trained on the full training set via grid search. 
+- `(best_model, scaler)` — `best_model` is the `RandomForestRegressor` selected by grid search, and `scaler` is the fitted `StandardScaler` object used during training.
 
-**Outputs (printed):** Best parameters, R², RMSE (log scale), top-10 feature importances. 
+**Outputs (printed):** Best parameters, R², RMSE (log scale), top-10 feature importances.
 
 **Example:**
 ```python
 from model import rf_fit
-best_model = rf_fit(final_df, area="Global_Sales")
+best_model, scaler = rf_fit(final_df, area="Global_Sales")
 ```
 
-## `predict(best_model, area, new_data)`
-**Purpose:** Scale numeric features in `new_data`, predict with `best_model`, and inverse the log transform via `np.expm1` to obtain predictions on the original scale. 
+## `predict(best_model, area, new_data, scaler=None)`
+**Purpose:** Prepare `new_data` using the same numeric scaling applied during training, predict with `best_model`, and inverse the log transform via `np.expm1` to obtain predictions on the original scale.
 
 **Parameters:**
 - `best_model`: fitted estimator from `rf_fit`
-- `area`: target name (not used in current implementation)
-- `new_data`: DataFrame with the same predictor columns used during training 
+- `area`: target name (not used by the function but kept for API compatibility)
+- `new_data`: `pd.DataFrame` with the predictor columns used during training
+- `scaler` *(optional)*: the `StandardScaler` instance returned by `rf_fit`. Passing this scaler is strongly recommended so numeric features are transformed consistently. If `scaler` is `None`, a new `StandardScaler` instance will be created — note that this new scaler will not be fitted and `transform()` will raise an error unless the caller provides already-scaled numeric columns.
 
 **Returns:**
-- `preds_exp` *(np.ndarray)*: Predictions in the original target scale. 
+- `preds_exp` *(np.ndarray)*: Predictions in the original target scale (inverse of `log1p`).
 
 **Example:**
 ```python
 from model import predict
-# Ensure consistent scaling via a Pipeline or by reusing the trained scaler
-preds = predict(best_model, area="Global_Sales", new_data=new_X)
+# Use the scaler returned from rf_fit for consistent scaling
+preds = predict(best_model, area="Global_Sales", new_data=new_X, scaler=scaler)
 ```
 
 # Module: `viz.py`

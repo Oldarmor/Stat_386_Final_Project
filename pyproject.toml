@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stat386_final"
-version = "0.1.5"
+version = "0.1.6"
 description = "Statistical analysis of video game sales data with preprocessing, visualization, and predictive modeling"
 authors = [
   { name = "Adam Britner" },
