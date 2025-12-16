@@ -1,3 +1,8 @@
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]  # repo-root/
+sys.path.insert(0, str(ROOT / "src"))
 import pandas as pd
 import streamlit as st
 import numpy as np
@@ -11,11 +16,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from stat386_final import viz, read, preprocess, model
 import pickle
-import sys
-from pathlib import Path
-
-ROOT = Path(__file__).resolve().parents[2]  # repo-root/
-sys.path.insert(0, str(ROOT / "src"))
 
 @st.cache_data
 def load_data(filepath):
