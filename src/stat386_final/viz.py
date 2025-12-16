@@ -1,3 +1,6 @@
+import matplotlib
+# Use a non-interactive backend to avoid GUI dependencies in test environments
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import seaborn as sns
 

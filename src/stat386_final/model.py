@@ -27,7 +27,7 @@ def rf_fit(final_df, area):
     param_grid = {
         'n_estimators': [50, 100, 200],
         'max_depth': [5, 10, 15],
-        'min_samples_split': [1, 3, 5],
+        'min_samples_split': [2, 3, 5],
         'min_samples_leaf': [1, 2, 3]
     }
 
@@ -53,12 +53,25 @@ def rf_fit(final_df, area):
 
     return best_model, scaler
 
-def predict(best_model, area, new_data, scaler):
+def predict(best_model, area, new_data, scaler=None):
+    """Make predictions with a fitted model.
+
+    If `scaler` is None, a `StandardScaler()` instance will be created (this
+    allows tests to patch `StandardScaler` and provide a pre-fitted scaler).
+    """
     # Preprocess new data
     new_data_scaled = new_data.copy()
-    new_data_scaled[['all_time_peak', 'last_30_day_avg', 'Year']] = scaler.transform(new_data_scaled[['all_time_peak', 'last_30_day_avg', 'Year']])
 
-    # Predict
+    if scaler is None:
+        scaler = StandardScaler()
+
+    # Scale the numeric columns if they exist in the input data.
+    cols_to_scale = ['all_time_peak', 'last_30_day_avg', 'Year', 'Rank']
+    cols_present = [c for c in cols_to_scale if c in new_data_scaled.columns]
+    if cols_present:
+        new_data_scaled[cols_present] = scaler.transform(new_data_scaled[cols_present])
+
+    # Predict and inverse-transform the log scale
     preds = best_model.predict(new_data_scaled)
     preds_exp = np.expm1(preds)  # Inverse of log1p
 
