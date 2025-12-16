@@ -10,8 +10,7 @@ from importlib.resources import files
 import matplotlib.pyplot as plt
 import seaborn as sns
 from stat386_final import viz, read, preprocess, model
-from contextlib import redirect_stdout
-import io
+import pickle
 
 @st.cache_data
 def load_data(filepath):
@@ -27,29 +26,44 @@ def clean_data(df):
 
 
 @st.cache_resource
-def load_model(df):
-    na_mod, na_scaler = model.rf_fit(df, area='NA_Sales')
-    eu_mod, eu_scaler = model.rf_fit(df, area='EU_Sales')
-    jp_mod, jp_scaler = model.rf_fit(df, area='JP_Sales')
-    other_mod, other_scaler = model.rf_fit(df, area='Other_Sales')
-    global_mod, global_scaler = model.rf_fit(df, area='Global_Sales')
+def load_model():
+    # na stuff
+    with open('./data/na_model.pkl', 'rb') as f:
+        na_mod = pickle.load(f)
+    with open('./data/na_scaler.pkl', 'rb') as f:
+        na_scaler = pickle.load(f)
+    # eu stuff
+    with open('./data/eu_model.pkl', 'rb') as f:
+        eu_mod = pickle.load(f)
+    with open('./data/eu_scaler.pkl', 'rb') as f:
+        eu_scaler = pickle.load(f)
+    # jp stuff
+    with open('./data/jp_model.pkl', 'rb') as f:
+        jp_mod = pickle.load(f)
+    with open('./data/jp_scaler.pkl', 'rb') as f:
+        jp_scaler = pickle.load(f)
+    #other stuff
+    with open('./data/other_model.pkl', 'rb') as f:
+        other_mod = pickle.load(f)
+    with open('./data/other_scaler.pkl', 'rb') as f:
+        other_scaler = pickle.load(f)
+    # global stuff
+    with open('./data/global_model.pkl', 'rb') as f:
+        global_mod = pickle.load(f)
+    with open('./data/global_scaler.pkl', 'rb') as f:
+        global_scaler = pickle.load(f)
+    # return all
     return na_mod, na_scaler, eu_mod, eu_scaler, jp_mod, jp_scaler, other_mod, other_scaler, global_mod, global_scaler
 
 def main() -> None:
     st.set_page_config(page_title="Video Game Analysis", layout="wide")
     st.title("Video Game Analysis")
     st.write(
-        "Use this template Streamlit app as a quick sandbox. Replace the sample data, "
-        "plug in your cleaning pipeline, and surface the most important visuals for your final deliverable."
+        "This is a streamlit app designed to analyze video game sales, and make predictions on other video game sales."
     )
-
-    if st.button("Clear cache"):
-        st.cache_data.clear()
-        st.cache_resource.clear()
-        st.rerun()
     
     with st.sidebar:
-        st.header("Controls")
+        st.header("Sections")
         show_cleaning = st.checkbox("Show Cleaning")
         show_analysis = st.checkbox("Do Analysis")
         make_predictions = st.checkbox('Make Predictions')
@@ -58,7 +72,7 @@ def main() -> None:
     filepath = './data/game_data.csv'
     df = load_data(filepath)
     sales_combined, cleaned_df = clean_data(df)
-    na_mod, na_scaler, eu_mod, eu_scaler, jp_mod, jp_scaler, other_mod, other_scaler, global_mod, global_scaler = load_model(df=cleaned_df)
+    na_mod, na_scaler, eu_mod, eu_scaler, jp_mod, jp_scaler, other_mod, other_scaler, global_mod, global_scaler = load_model()
     areas_g = ['NA', 'EU', 'JP', 'Other', 'Global']
     areas_p = ['NA', 'EU', 'JP', 'Other', 'Global']
     platforms = df["Platform"].dropna().unique().tolist()
@@ -66,6 +80,7 @@ def main() -> None:
     
 
     st.subheader("Data Preview")
+    st.write('This is a preview of the starting data set, it has 1766 rows and 13 columns.')
     st.dataframe(df, use_container_width=True)
 
     if show_cleaning:
@@ -121,11 +136,14 @@ def main() -> None:
         }
         df_input = pd.DataFrame(dict_list)
         df_input = preprocess.process_data(df_input)
-        df_predict = preprocess.prepare_data(sales_combined)
+        df_predict = preprocess.prepare_data(df_input)
         df_predict = df_predict.reindex(
             columns=cleaned_df.columns,
             fill_value=0
         )
+        list_cols_drop = [col for col in df_predict.columns if 'Sales' in col]
+        list_cols_drop.append('Rank')
+        df_predict = df_predict.drop(list_cols_drop, axis = 1)
         if area_predict == 'NA':
             best_model = na_mod
             scaler = na_scaler
@@ -144,19 +162,7 @@ def main() -> None:
         if area_predict and genre_predict and platforms_predict and all_time_peak and last_30_day_avg and year:
             if st.button('Predict Sales!'):
                 prediction = model.predict(best_model=best_model, area=area_predict, new_data=df_predict, scaler=scaler)
-                st.write(f'Predicted Sales for {area_predict}: {prediction}')
-
-        
-        
-        
-        
-
-        
-
-    st.info(
-        "Next steps: customize the sidebar controls, drop in Streamlit charts (st.bar_chart, st.map, etc.), "
-        "and layer in explanations so stakeholders can self-serve results."
-    )
+                st.write(f'Predicted Sales for {area_predict}: {round(prediction[0], 3)} Million Copies')
 
 
 if __name__ == "__main__":
