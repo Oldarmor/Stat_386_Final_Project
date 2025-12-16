@@ -22,7 +22,9 @@ def process_data(sales):
         })
         .reset_index()
     )
-    return sales_combined
+    sales_combined['Rank'] = sales_combined['Global_Sales'].rank(ascending=False, method='first')
+    sales_combined.sort_values(by='Rank', inplace=True)
+    return sales_combined.reset_index()
 
 def prepare_data(sales_combined):
     """Completes data preparation."""
@@ -39,6 +41,6 @@ def prepare_data(sales_combined):
 
 
     # Combine encoded columns with numeric predictors
-    final_df = pd.concat([sales_combined[['all_time_peak', 'last_30_day_avg', 'Year', 'Rank', 'Global_Sales']], platform_encoded, genre_encoded], axis=1)
+    final_df = pd.concat([sales_combined[['all_time_peak', 'last_30_day_avg', 'Year', 'Rank', 'Global_Sales', 'NA_Sales', 'EU_Sales', 'JP_Sales', 'Other_Sales']], platform_encoded, genre_encoded], axis=1)
     final_df = final_df.dropna(subset=['Year'])
     return final_df

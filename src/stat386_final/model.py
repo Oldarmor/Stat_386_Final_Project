@@ -7,7 +7,9 @@ from sklearn.metrics import r2_score, mean_squared_error
 
 def rf_fit(final_df, area):
     """Fits Random Forest model and returns the best model."""
-    x = final_df.drop(columns = [area])
+    cols_drop = [col for col in final_df.columns if 'Sales' in col]
+    cols_drop.append('Rank')
+    x = final_df.drop(columns = cols_drop)
     y = np.log1p(final_df[area])
 
 
@@ -17,8 +19,8 @@ def rf_fit(final_df, area):
 
     # Scale numeric features
     scaler = StandardScaler()
-    X_train[['all_time_peak', 'last_30_day_avg', 'Year', 'Rank']] = scaler.fit_transform(X_train[['all_time_peak', 'last_30_day_avg', 'Year', 'Rank']])
-    X_test[['all_time_peak', 'last_30_day_avg', 'Year', 'Rank']] = scaler.transform(X_test[['all_time_peak', 'last_30_day_avg', 'Year', 'Rank']])
+    X_train[['all_time_peak', 'last_30_day_avg', 'Year']] = scaler.fit_transform(X_train[['all_time_peak', 'last_30_day_avg', 'Year']])
+    X_test[['all_time_peak', 'last_30_day_avg', 'Year']] = scaler.transform(X_test[['all_time_peak', 'last_30_day_avg', 'Year']])
 
     model = RandomForestRegressor(random_state=42)
 
@@ -41,6 +43,7 @@ def rf_fit(final_df, area):
     r2 = r2_score(y_test, preds)
     rmse = mean_squared_error(y_test, preds)
 
+    print(f'For Area: {area}')
     print("Best Parameters:", grid_search.best_params_)
     print("R²:", r2)
     print("RMSE (log scale):", rmse)
@@ -48,13 +51,12 @@ def rf_fit(final_df, area):
     importances = pd.Series(best_model.feature_importances_, index=x.columns).sort_values(ascending=False)
     print(importances.head(10))
 
-    return best_model
+    return best_model, scaler
 
-def predict(best_model, area, new_data):
-    scaler = StandardScaler()
+def predict(best_model, area, new_data, scaler):
     # Preprocess new data
     new_data_scaled = new_data.copy()
-    new_data_scaled[['all_time_peak', 'last_30_day_avg', 'Year', 'Rank']] = scaler.transform(new_data_scaled[['all_time_peak', 'last_30_day_avg', 'Year', 'Rank']])
+    new_data_scaled[['all_time_peak', 'last_30_day_avg', 'Year']] = scaler.transform(new_data_scaled[['all_time_peak', 'last_30_day_avg', 'Year']])
 
     # Predict
     preds = best_model.predict(new_data_scaled)
