@@ -17,6 +17,9 @@ import seaborn as sns
 from stat386_final import viz, read, preprocess, model
 import pickle
 
+PKG_DIR = Path(__file__).resolve().parent  # src/stat386_final
+filepath = PKG_DIR / "data" / "game_data.csv"
+
 @st.cache_data
 def load_data(filepath):
     df = read.read_data(filepath)
@@ -33,29 +36,29 @@ def clean_data(df):
 @st.cache_resource
 def load_model():
     # na stuff
-    with open('./data/na_model.pkl', 'rb') as f:
+    with open(PKG_DIR / "data" / 'na_model.pkl', 'rb') as f:
         na_mod = pickle.load(f)
-    with open('./data/na_scaler.pkl', 'rb') as f:
+    with open(PKG_DIR / "data" / 'na_scaler.pkl', 'rb') as f:
         na_scaler = pickle.load(f)
     # eu stuff
-    with open('./data/eu_model.pkl', 'rb') as f:
+    with open(PKG_DIR / "data" / 'eu_model.pkl', 'rb') as f:
         eu_mod = pickle.load(f)
-    with open('./data/eu_scaler.pkl', 'rb') as f:
+    with open(PKG_DIR / "data" / 'eu_scaler.pkl', 'rb') as f:
         eu_scaler = pickle.load(f)
     # jp stuff
-    with open('./data/jp_model.pkl', 'rb') as f:
+    with open(PKG_DIR / "data" / 'jp_model.pkl', 'rb') as f:
         jp_mod = pickle.load(f)
-    with open('./data/jp_scaler.pkl', 'rb') as f:
+    with open(PKG_DIR / "data" / 'jp_scaler.pkl', 'rb') as f:
         jp_scaler = pickle.load(f)
     #other stuff
-    with open('./data/other_model.pkl', 'rb') as f:
+    with open(PKG_DIR / "data" / 'other_model.pkl', 'rb') as f:
         other_mod = pickle.load(f)
-    with open('./data/other_scaler.pkl', 'rb') as f:
+    with open(PKG_DIR / "data" / 'other_scaler.pkl', 'rb') as f:
         other_scaler = pickle.load(f)
     # global stuff
-    with open('./data/global_model.pkl', 'rb') as f:
+    with open(PKG_DIR / "data" / 'global_model.pkl', 'rb') as f:
         global_mod = pickle.load(f)
-    with open('./data/global_scaler.pkl', 'rb') as f:
+    with open(PKG_DIR / "data" / 'global_scaler.pkl', 'rb') as f:
         global_scaler = pickle.load(f)
     # return all
     return na_mod, na_scaler, eu_mod, eu_scaler, jp_mod, jp_scaler, other_mod, other_scaler, global_mod, global_scaler
@@ -74,7 +77,6 @@ def main() -> None:
         make_predictions = st.checkbox('Make Predictions')
         
     # initialize the dfs and the model
-    filepath = './data/game_data.csv'
     df = load_data(filepath)
     sales_combined, cleaned_df = clean_data(df)
     na_mod, na_scaler, eu_mod, eu_scaler, jp_mod, jp_scaler, other_mod, other_scaler, global_mod, global_scaler = load_model()
