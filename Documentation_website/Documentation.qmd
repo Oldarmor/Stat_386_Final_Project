@@ -28,12 +28,10 @@ This document describes the public functions in the project, covering their purp
 **Returns:**
 - Path-like object to `data/<filename>`. 
 
-**Notes:** Ensure your package includes a `data/` directory and resources are accessible. 
-
 **Example:**
 ```python
 from read import get_data_path
-csv_path = get_data_path("sales.csv")
+csv_path = get_data_path("vgsales.csv")
 ```
 
 ## `read_data(file_path)`
@@ -85,8 +83,6 @@ sales_combined = process_data(sales)
   - Target(s): includes `Global_Sales`
   - Encoded features: `Platform_<category>`, `Genre_<category>` 
 
-**Notes:** Adjust which targets/predictors are included based on modeling needs. 
-
 **Example:**
 ```python
 from preprocess import prepare_data
@@ -108,10 +104,6 @@ final_df = prepare_data(sales_combined)
 
 **Outputs (printed):** Best parameters, R², RMSE (log scale), top-10 feature importances. 
 
-**Implementation notes:**
-- Replace `min_samples_split` values with `[2,3,5]` to comply with scikit-learn requirements. 
-- Consider moving scaling into a `Pipeline` to ensure consistent preprocessing at inference time. 
-
 **Example:**
 ```python
 from model import rf_fit
@@ -128,8 +120,6 @@ best_model = rf_fit(final_df, area="Global_Sales")
 
 **Returns:**
 - `preds_exp` *(np.ndarray)*: Predictions in the original target scale. 
-
-**Implementation caveat:** A **new** `StandardScaler()` is created and `transform` is called without fitting to training statistics, which will raise an error and/or cause inconsistency. Persist and reuse the fitted scaler, or use a `Pipeline`. 
 
 **Example:**
 ```python
@@ -167,42 +157,4 @@ print_genre_distribution(sales, genre="Action", area="Global_Sales")
 from viz import print_platform_distribution
 print_platform_distribution(sales, platform="PS4", area="Global_Sales")
 ```
-
-# Version & Metadata (`__init__.py`)
-
-- `__version__ = "0.1.5"` identifies the current package version. 
-- The module re-exports the public API and defines `__all__` to make the import surface explicit. 
-
-# End-to-End Workflow (Example)
-
-```python
-from read import get_data_path, read_data
-from preprocess import process_data, prepare_data
-from model import rf_fit, predict
-from viz import print_genre_distribution, print_platform_distribution
-
-# 1) Read raw CSV
-sales = read_data(get_data_path("sales.csv"))  # path helper + CSV reader
-
-# 2) Aggregate and prepare features
-sales_combined = process_data(sales)
-final_df = prepare_data(sales_combined)
-
-# 3) Train a model (predict Global_Sales)
-best_model = rf_fit(final_df, area="Global_Sales")
-
-# 4) Visualize distributions
-print_genre_distribution(sales, genre="Action", area="Global_Sales")
-print_platform_distribution(sales, platform="PS4", area="Global_Sales")
-
-# 5) Predict on new data (ensure consistent preprocessing)
-X_new = final_df.drop(columns=["Global_Sales"]).iloc[:5]
-preds = predict(best_model, area="Global_Sales", new_data=X_new)
-```
-
-# Recommendations
-
-- **Fix hyperparameter grid:** Use `min_samples_split >= 2` to avoid errors. 
-- **Consistent scaling:** Move scaling into a `Pipeline` or persist the trained scaler for inference. 
-- **Schema checks:** Validate required columns before processing; log encoder class counts in `prepare_data`. 
 

@@ -20,7 +20,7 @@ _TODO: Describe the motivation, stakeholders, and success criteria for this anal
 
 1. _Data acquisition:_ `TODO - outline collection scripts/APIs`
 2. _Cleaning pipeline:_ `TODO - summarize transformations and validations implemented`
-3. _Analysis workflow:_ `TODO - describe statistical or modeling techniques`
+3. _Analysis workflow:_ `We used a Random Forest model to train and fit the data, allowing us to make predictions about new games and see which features are most important in modeling a games sales.`
 4. _Tooling:_ `TODO - list packages, environments, and reproducibility steps`
 
 ## Results & Diagnostics
@@ -57,4 +57,4 @@ Genre features did not appear in the top 10, suggesting platform and ranking dom
 
 ## Discussion & Next Steps
 
-_TODO: Interpret the results, note limitations, and capture open questions or future experiments._
+Because of the limited data we were able to collect on game specifics(game price, length, mechanics, etc...) we are unable to make concreate inference on what makes a video game successful. Further data collection and research is nessisary to make specific recomendations for video game design. Our analysis does offer some insights, suggesting that player count is a good indicator of a games financial success.

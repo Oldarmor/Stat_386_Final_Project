@@ -54,12 +54,3 @@ model = rf_fit(final_df, 'Global_Sales')
 print_genre_distribution(sales, 'Action', 'Global_Sales')
 print_platform_distribution(sales, 'PS4', 'Global_Sales')
 ```
-
-## Notes about `predict`
-
-- The package exposes a `predict` helper. In the current release the training path performs scaling internally but does not return the fitted `StandardScaler`. To use `predict` reliably you should ensure new data is prepared and scaled the same way as `prepare_data` did during training. If you need a prediction pipeline (model + scaler), adapt `rf_fit` to return the scaler alongside the model or scale new observations with the same transformation used at training time.
-
-## Where to go next
-
-- See the package source for implementation details: [src/stat386_final](src/stat386_final)
-- If you want, I can: add a `train_pipeline` that returns `(model, scaler)`, add notebook examples, or run a quick import test in this environment.

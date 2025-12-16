@@ -7,13 +7,6 @@
     "text": "Here is a website all about my package for STAT 386!\nDocumentation here.\nGet started here.\nReview the technical report."
   },
   {
-    "objectID": "Documentation.html",
-    "href": "Documentation.html",
-    "title": "Project Functions Documentation",
-    "section": "",
-    "text": "This document describes the public functions in the project, covering their purpose, parameters, return values, side effects, usage examples, and implementation notes. The functions are defined across the following modules: read.py, preprocess.py, model.py, and viz.py."
-  },
-  {
     "objectID": "TechnicalReport.html",
     "href": "TechnicalReport.html",
     "title": "Technical Report",
@@ -63,11 +56,11 @@
     "text": "Discussion & Next Steps\nTODO: Interpret the results, note limitations, and capture open questions or future experiments."
   },
   {
-    "objectID": "Tutorial.html",
-    "href": "Tutorial.html",
-    "title": "Getting Started",
+    "objectID": "Documentation.html",
+    "href": "Documentation.html",
+    "title": "Project Functions Documentation",
     "section": "",
-    "text": "This short tutorial shows common workflows: reading the bundled data, processing it, training the Random Forest model, and plotting basic distributions.\n\n\nInstall the package in editable mode (for development) or normally:\npip install -e .\n# or\npip install .\n\n\n\nCopy the following into a Python session or script.\nfrom importlib.resources import files\nfrom stat386_final import (\n    read_data,\n    process_data,\n    prepare_data,\n    rf_fit,\n    print_genre_distribution,\n    print_platform_distribution,\n    __version__,\n)\n\nprint('stat386_final version:', __version__)\n\n# Load the bundled example dataset\ndata_path = files(\"stat386_final\").joinpath(\"data/game_data.csv\")\nsales = read_data(data_path)\nprint(sales.shape)\nprint(list(sales.columns)[:10])\n\n# Process and prepare for modeling\nsales_combined = process_data(sales)\nfinal_df = prepare_data(sales_combined)\nprint('Prepared dataset shape:', final_df.shape)\n\n# Fit a Random Forest model to predict global sales\n# (This will run a small grid search and print metrics)\nmodel = rf_fit(final_df, 'Global_Sales')\n\n# Quick plots (shows matplotlib windows in notebooks or interactive sessions)\nprint_genre_distribution(sales, 'Action', 'Global_Sales')\nprint_platform_distribution(sales, 'PS4', 'Global_Sales')\n\n\n\n\nThe package exposes a predict helper. In the current release the training path performs scaling internally but does not return the fitted StandardScaler. To use predict reliably you should ensure new data is prepared and scaled the same way as prepare_data did during training. If you need a prediction pipeline (model + scaler), adapt rf_fit to return the scaler alongside the model or scale new observations with the same transformation used at training time.\n\n\n\n\n\nSee the package source for implementation details: src/stat386_final\nIf you want, I can: add a train_pipeline that returns (model, scaler), add notebook examples, or run a quick import test in this environment."
+    "text": "This document describes the public functions in the project, covering their purpose, parameters, return values, side effects, usage examples, and implementation notes. The functions are defined across the following modules: read.py, preprocess.py, model.py, and viz.py."
   },
   {
     "objectID": "Documentation.html#get_data_pathfilename-str",
@@ -124,6 +117,13 @@
     "title": "Project Functions Documentation",
     "section": "print_platform_distribution(sales, platform, area)",
     "text": "print_platform_distribution(sales, platform, area)\nPurpose: Plot a histogram of area restricted to rows whose Platform contains the given substring. Shows the plot via plt.show().\nParameters: - sales: DataFrame of sales records - platform: Substring to match within Platform (case-sensitive) - area: Numeric column to plot (e.g., Global_Sales)\nExample:\nfrom viz import print_platform_distribution\nprint_platform_distribution(sales, platform=\"PS4\", area=\"Global_Sales\")"
+  },
+  {
+    "objectID": "Tutorial.html",
+    "href": "Tutorial.html",
+    "title": "Getting Started",
+    "section": "",
+    "text": "This short tutorial shows common workflows: reading the bundled data, processing it, training the Random Forest model, and plotting basic distributions.\n\n\nInstall the package in editable mode (for development) or normally:\npip install -e .\n# or\npip install .\n\n\n\nCopy the following into a Python session or script.\nfrom importlib.resources import files\nfrom stat386_final import (\n    read_data,\n    process_data,\n    prepare_data,\n    rf_fit,\n    print_genre_distribution,\n    print_platform_distribution,\n    __version__,\n)\n\nprint('stat386_final version:', __version__)\n\n# Load the bundled example dataset\ndata_path = files(\"stat386_final\").joinpath(\"data/game_data.csv\")\nsales = read_data(data_path)\nprint(sales.shape)\nprint(list(sales.columns)[:10])\n\n# Process and prepare for modeling\nsales_combined = process_data(sales)\nfinal_df = prepare_data(sales_combined)\nprint('Prepared dataset shape:', final_df.shape)\n\n# Fit a Random Forest model to predict global sales\n# (This will run a small grid search and print metrics)\nmodel = rf_fit(final_df, 'Global_Sales')\n\n# Quick plots (shows matplotlib windows in notebooks or interactive sessions)\nprint_genre_distribution(sales, 'Action', 'Global_Sales')\nprint_platform_distribution(sales, 'PS4', 'Global_Sales')\n\n\n\n\nThe package exposes a predict helper. In the current release the training path performs scaling internally but does not return the fitted StandardScaler. To use predict reliably you should ensure new data is prepared and scaled the same way as prepare_data did during training. If you need a prediction pipeline (model + scaler), adapt rf_fit to return the scaler alongside the model or scale new observations with the same transformation used at training time.\n\n\n\n\n\nSee the package source for implementation details: src/stat386_final\nIf you want, I can: add a train_pipeline that returns (model, scaler), add notebook examples, or run a quick import test in this environment."
   },
   {
     "objectID": "Tutorial.html#install",
