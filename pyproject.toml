@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "stat386_final"
-version = "0.1.6"
+version = "0.1.7"
 description = "Statistical analysis of video game sales data with preprocessing, visualization, and predictive modeling"
 authors = [
   { name = "Adam Britner" },
@@ -31,6 +31,5 @@ where = ["src"]
 
 
 [project.urls]
-Homepage = "https://github.com/yourusername/hello-uv-yourname"
+Homepage = "https://Oldarmor.github.io/Stat_386_Final_Project/"
 Repository = "https://github.com/Oldarmor/Stat_386_Final_Project"
-Issues = "https://github.com/yourusername/hello-uv-yourname/issues"
