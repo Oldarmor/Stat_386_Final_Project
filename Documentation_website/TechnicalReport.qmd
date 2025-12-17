@@ -6,6 +6,7 @@ description: "Project summary, methodology, and findings placeholder"
 ## Executive Summary
 
 _TODO: Provide a concise overview of the project objectives, key findings, and actionable recommendations._
+The purpose of this project was to see what factors relate to a video games sales. We looked at a variety of factors including the consoles the video games were offered on, steam data base info on the playerbase size, and the year that the game was made. We found that the three most important factors for determining Global Sales are the platform the game was on (being on XBox 360 Was really important), the last thirty day player average and the all time peak number of players on that game.
 
 ## Project Context
 
