@@ -1,59 +1,52 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "My Python Package!",
-    "section": "",
-    "text": "Here is a website all about my package for STAT 386!\nDocumentation here.\nGet started here.\nReview the technical report."
-  },
-  {
     "objectID": "TechnicalReport.html",
     "href": "TechnicalReport.html",
     "title": "Technical Report",
     "section": "",
-    "text": "TODO: Provide a concise overview of the project objectives, key findings, and actionable recommendations."
+    "text": "The purpose of this project was to see what factors relate to a video games sales. We looked at a variety of factors including the consoles the video games were offered on, steam data base info on the player base size, and the year that the game was made. We found that the three most important factors for determining Global Sales are the platform the game was on (being on XBox 360 Was really important), the last thirty day player average and the all time peak number of players on that game."
   },
   {
     "objectID": "TechnicalReport.html#executive-summary",
     "href": "TechnicalReport.html#executive-summary",
     "title": "Technical Report",
     "section": "",
-    "text": "TODO: Provide a concise overview of the project objectives, key findings, and actionable recommendations."
+    "text": "The purpose of this project was to see what factors relate to a video games sales. We looked at a variety of factors including the consoles the video games were offered on, steam data base info on the player base size, and the year that the game was made. We found that the three most important factors for determining Global Sales are the platform the game was on (being on XBox 360 Was really important), the last thirty day player average and the all time peak number of players on that game."
   },
   {
     "objectID": "TechnicalReport.html#project-context",
     "href": "TechnicalReport.html#project-context",
     "title": "Technical Report",
     "section": "Project Context",
-    "text": "Project Context\nTODO: Describe the motivation, stakeholders, and success criteria for this analysis."
+    "text": "Project Context\nReally the big motivation behind this analysis was to see what criteria really lead to a successful game. We measured our success on our ability to predict and better understand the relationship between variables like the games genre, year, platforms and player base size effect the number of copies a game sells."
   },
   {
     "objectID": "TechnicalReport.html#data-sources",
     "href": "TechnicalReport.html#data-sources",
     "title": "Technical Report",
     "section": "Data Sources",
-    "text": "Data Sources\n\nPrimary dataset: VG Sales Data\nSupplementary data: Scraped player data from Steam using aGithub Repo.Because of the lengthy time scraping the data took, we have a file of how we scraped it and the scraped csv in the package."
+    "text": "Data Sources\nWe merge two data sets together in order to get the final data set. The first data set is a csv file that contains thousands of games and their platforms and their sales. This data set can be found here. The second data set used a web scraper to scrape player base information off of the steam data base and can be found in this repository."
   },
   {
     "objectID": "TechnicalReport.html#methodology",
     "href": "TechnicalReport.html#methodology",
     "title": "Technical Report",
     "section": "Methodology",
-    "text": "Methodology\n\nData acquisition: TODO - outline collection scripts/APIs\nCleaning pipeline: TODO - summarize transformations and validations implemented\nAnalysis workflow: TODO - describe statistical or modeling techniques\nTooling: TODO - list packages, environments, and reproducibility steps"
+    "text": "Methodology\n\nData acquisition: Luckily the video game sales data was already in the form of a csv, but getting the steam player base data was a little more complicated. In steam each game is referred to by a game id, not their actual name, so in order to get information on as many games as possible we made a call to the steam API and got 50,000 different game ids. Of those 50,000 game ids we merged that with our original game sales data and only kept games that we had an game id for. Then for each game with a game id we pulled the information for the respective game off of steamcharts.com and scraped the data off of there to get the player base size and the average number of players on the game within the last 30 days.\nCleaning pipeline: Once the data was pulled each game was in the data set multiple times because it was in the data set once for each console it was released on. So for our analysis we just aggregated the games so each game was only in the data set once and summed their total sales across consoles. Then we encoded the consoles that a specific game was on with just binary indicators. This allowed us to see the effect that different consoles have on a games sales.\nAnalysis workflow: We used a Random Forest model to train and fit the data, allowing us to make predictions about new games and see which features are most important in modeling a games sales.\nTooling: We used a variety of different packages for each step of the process below is a list of the step and which packages were used for that step: Data Acquisition & Webscraping:\n\nPandas (for Data Frame Manipulation)\nNumpy (for math)\nRequests (to access the web)\nBeautifulSoup (for HTML parsing)\nTQDM (for progress bar on webscraping) Cleaning and Analysis:\nPandas (for Data Frame manipulation)\nNumpy (for math)\nSeaborn (for charts)\nMatplotlib (for charts)\nScikitlearn (for the binary console indicators) Modeling:\nScikitlearn (for the model, scaler, splitting into train and test, and model evaluation metrics)"
   },
   {
     "objectID": "TechnicalReport.html#results-diagnostics",
     "href": "TechnicalReport.html#results-diagnostics",
     "title": "Technical Report",
     "section": "Results & Diagnostics",
-    "text": "Results & Diagnostics\n\nBest Hyperparameters:\nmax_depth: 10 min_samples_leaf: 1 min_samples_split: 5 n_estimators: 200\n\n\nPerformance Metrics:\nR² (Test Set): 0.6604 RMSE (log scale): 0.1269\n\n\nFeature Importance (Top 10):\nRank – 0.2906 Platform_X360 – 0.1819 last_30_day_avg – 0.1439 all_time_peak – 0.0575 Platform_PS3 – 0.0537 Platform_SAT – 0.0359 Platform_PS2 – 0.0356 Year – 0.0319 Platform_PC – 0.0297 Platform_GC – 0.0287\n\n\nInterpretation:\nRank is the most influential predictor, followed by platform-specific indicators and recent activity metrics (last_30_day_avg). Genre features did not appear in the top 10, suggesting platform and ranking dominate sales prediction."
+    "text": "Results & Diagnostics\n\nBest Hyperparameters:\nmax_depth: 10 min_samples_leaf: 1 min_samples_split: 5 n_estimators: 200\n\n\nPerformance Metrics:\nR² (Test Set): 0.6604 RMSE (log scale): 0.1269\n\n\nFeature Importance (Top 10):\nRank – 0.2906 Platform_X360 – 0.1819 last_30_day_avg – 0.1439 all_time_peak – 0.0575 Platform_PS3 – 0.0537 Platform_SAT – 0.0359 Platform_PS2 – 0.0356 Year – 0.0319 Platform_PC – 0.0297 Platform_GC – 0.0287\n\n\nInterpretation:\nAfter training and tuning the model it found that rank was the most important followed by the game being on the Xbox 360, then last 30 day average and finally all time peak players. It makes sense that the model relied heavily on the rank because the data set did rank the games on number of sales, but furthermore it seams that what really matters in the platform (specifically being on Xbox 360) and then the player base size."
   },
   {
     "objectID": "TechnicalReport.html#discussion-next-steps",
     "href": "TechnicalReport.html#discussion-next-steps",
     "title": "Technical Report",
     "section": "Discussion & Next Steps",
-    "text": "Discussion & Next Steps\nTODO: Interpret the results, note limitations, and capture open questions or future experiments."
+    "text": "Discussion & Next Steps\nBecause of the limited data we were able to collect on game specifics(game price, length, mechanics, etc…) we are unable to make concrete inference on what makes a video game successful. Further data collection and research is necessary to make specific recommendations for video game design. That research could include things like budget spent on the game, years in development, and an indicator if the game is a part of a series (as opposed to a stand alone game). Regardless our analysis still offers some insights, suggesting that player count is a good indicator of a games financial success."
   },
   {
     "objectID": "Documentation.html",
@@ -67,7 +60,7 @@
     "href": "Documentation.html#get_data_pathfilename-str",
     "title": "Project Functions Documentation",
     "section": "get_data_path(filename: str)",
-    "text": "get_data_path(filename: str)\nPurpose: Return a path-like object pointing to data/&lt;filename&gt; within the package using importlib.resources.\nParameters: - filename (str): File name, e.g., \"sales.csv\".\nReturns: - Path-like object to data/&lt;filename&gt;.\nNotes: Ensure your package includes a data/ directory and resources are accessible.\nExample:\nfrom read import get_data_path\ncsv_path = get_data_path(\"sales.csv\")"
+    "text": "get_data_path(filename: str)\nPurpose: Return a path-like object pointing to data/&lt;filename&gt; within the package using importlib.resources.\nParameters: - filename (str): File name, e.g., \"sales.csv\".\nReturns: - Path-like object to data/&lt;filename&gt;.\nExample:\nfrom read import get_data_path\ncsv_path = get_data_path(\"vgsales.csv\")"
   },
   {
     "objectID": "Documentation.html#read_datafile_path",
@@ -88,21 +81,21 @@
     "href": "Documentation.html#prepare_datasales_combined",
     "title": "Project Functions Documentation",
     "section": "prepare_data(sales_combined)",
-    "text": "prepare_data(sales_combined)\nPurpose: Ensure list types for Platform/Genre; multi-hot encode them via MultiLabelBinarizer; concatenate encoded features with selected numeric predictors; drop rows with missing Year.\nReturns: - final_df (pd.DataFrame) containing: - Numeric predictors: all_time_peak, last_30_day_avg, Year, Rank - Target(s): includes Global_Sales - Encoded features: Platform_&lt;category&gt;, Genre_&lt;category&gt;\nNotes: Adjust which targets/predictors are included based on modeling needs.\nExample:\nfrom preprocess import prepare_data\nfinal_df = prepare_data(sales_combined)"
+    "text": "prepare_data(sales_combined)\nPurpose: Ensure list types for Platform/Genre; multi-hot encode them via MultiLabelBinarizer; concatenate encoded features with selected numeric predictors; drop rows with missing Year.\nReturns: - final_df (pd.DataFrame) containing: - Numeric predictors: all_time_peak, last_30_day_avg, Year, Rank - Target(s): includes Global_Sales - Encoded features: Platform_&lt;category&gt;, Genre_&lt;category&gt;\nExample:\nfrom preprocess import prepare_data\nfinal_df = prepare_data(sales_combined)"
   },
   {
     "objectID": "Documentation.html#rf_fitfinal_df-area",
     "href": "Documentation.html#rf_fitfinal_df-area",
     "title": "Project Functions Documentation",
     "section": "rf_fit(final_df, area)",
-    "text": "rf_fit(final_df, area)\nPurpose: Train a RandomForestRegressor to predict area using 3-fold GridSearchCV. Splits data, scales numeric features on the training set, logs target via np.log1p, evaluates on test, prints metrics and feature importances, returns best estimator.\nKey steps: - Split: train_test_split(test_size=0.2, random_state=42) - Scale: StandardScaler on ['all_time_peak', 'last_30_day_avg', 'Year', 'Rank'] - Grid: n_estimators=[50,100,200], max_depth=[5,10,15], min_samples_split=[1,3,5], min_samples_leaf=[1,2,3] (note: min_samples_split must be ≥2)\nReturns: - best_model (RandomForestRegressor) trained on the full training set via grid search.\nOutputs (printed): Best parameters, R², RMSE (log scale), top-10 feature importances.\nImplementation notes: - Replace min_samples_split values with [2,3,5] to comply with scikit-learn requirements. - Consider moving scaling into a Pipeline to ensure consistent preprocessing at inference time.\nExample:\nfrom model import rf_fit\nbest_model = rf_fit(final_df, area=\"Global_Sales\")"
+    "text": "rf_fit(final_df, area)\nPurpose: Train a RandomForestRegressor to predict area using 3-fold GridSearchCV. The function splits the data, scales numeric features on the training set, logs the target via np.log1p, evaluates on a held-out test set, prints metrics and feature importances, and returns the trained estimator together with the fitted StandardScaler used for numeric features.\nKey steps: - Split: train_test_split(test_size=0.2, random_state=42) - Scale: StandardScaler is fit on the training set for the numeric features ['all_time_peak', 'last_30_day_avg', 'Year'] (the scaler is returned so it can be reused when preparing new data for prediction). - Grid: n_estimators=[50,100,200], max_depth=[5,10,15], min_samples_split=[2,3,5], min_samples_leaf=[1,2,3]\nReturns: - (best_model, scaler) — best_model is the RandomForestRegressor selected by grid search, and scaler is the fitted StandardScaler object used during training.\nOutputs (printed): Best parameters, R², RMSE (log scale), top-10 feature importances.\nExample:\nfrom model import rf_fit\nbest_model, scaler = rf_fit(final_df, area=\"Global_Sales\")"
   },
   {
-    "objectID": "Documentation.html#predictbest_model-area-new_data",
-    "href": "Documentation.html#predictbest_model-area-new_data",
+    "objectID": "Documentation.html#predictbest_model-area-new_data-scalernone",
+    "href": "Documentation.html#predictbest_model-area-new_data-scalernone",
     "title": "Project Functions Documentation",
-    "section": "predict(best_model, area, new_data)",
-    "text": "predict(best_model, area, new_data)\nPurpose: Scale numeric features in new_data, predict with best_model, and inverse the log transform via np.expm1 to obtain predictions on the original scale.\nParameters: - best_model: fitted estimator from rf_fit - area: target name (not used in current implementation) - new_data: DataFrame with the same predictor columns used during training\nReturns: - preds_exp (np.ndarray): Predictions in the original target scale.\nImplementation caveat: A new StandardScaler() is created and transform is called without fitting to training statistics, which will raise an error and/or cause inconsistency. Persist and reuse the fitted scaler, or use a Pipeline.\nExample:\nfrom model import predict\n# Ensure consistent scaling via a Pipeline or by reusing the trained scaler\npreds = predict(best_model, area=\"Global_Sales\", new_data=new_X)"
+    "section": "predict(best_model, area, new_data, scaler=None)",
+    "text": "predict(best_model, area, new_data, scaler=None)\nPurpose: Prepare new_data using the same numeric scaling applied during training, predict with best_model, and inverse the log transform via np.expm1 to obtain predictions on the original scale.\nParameters: - best_model: fitted estimator from rf_fit - area: target name (not used by the function but kept for API compatibility) - new_data: pd.DataFrame with the predictor columns used during training - scaler (optional): the StandardScaler instance returned by rf_fit. Passing this scaler is strongly recommended so numeric features are transformed consistently. If scaler is None, a new StandardScaler instance will be created — note that this new scaler will not be fitted and transform() will raise an error unless the caller provides already-scaled numeric columns.\nReturns: - preds_exp (np.ndarray): Predictions in the original target scale (inverse of log1p).\nExample:\nfrom model import predict\n# Use the scaler returned from rf_fit for consistent scaling\npreds = predict(best_model, area=\"Global_Sales\", new_data=new_X, scaler=scaler)"
   },
   {
     "objectID": "Documentation.html#print_genre_distributionsales-genre-area",
@@ -119,11 +112,18 @@
     "text": "print_platform_distribution(sales, platform, area)\nPurpose: Plot a histogram of area restricted to rows whose Platform contains the given substring. Shows the plot via plt.show().\nParameters: - sales: DataFrame of sales records - platform: Substring to match within Platform (case-sensitive) - area: Numeric column to plot (e.g., Global_Sales)\nExample:\nfrom viz import print_platform_distribution\nprint_platform_distribution(sales, platform=\"PS4\", area=\"Global_Sales\")"
   },
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "My Python Package!",
+    "section": "",
+    "text": "Here is a website all about my package for STAT 386!\nDocumentation here.\nGet started here.\nReview the technical report."
+  },
+  {
     "objectID": "Tutorial.html",
     "href": "Tutorial.html",
     "title": "Getting Started",
     "section": "",
-    "text": "This short tutorial shows common workflows: reading the bundled data, processing it, training the Random Forest model, and plotting basic distributions.\n\n\nInstall the package in editable mode (for development) or normally:\npip install -e .\n# or\npip install .\n\n\n\nCopy the following into a Python session or script.\nfrom importlib.resources import files\nfrom stat386_final import (\n    read_data,\n    process_data,\n    prepare_data,\n    rf_fit,\n    print_genre_distribution,\n    print_platform_distribution,\n    __version__,\n)\n\nprint('stat386_final version:', __version__)\n\n# Load the bundled example dataset\ndata_path = files(\"stat386_final\").joinpath(\"data/game_data.csv\")\nsales = read_data(data_path)\nprint(sales.shape)\nprint(list(sales.columns)[:10])\n\n# Process and prepare for modeling\nsales_combined = process_data(sales)\nfinal_df = prepare_data(sales_combined)\nprint('Prepared dataset shape:', final_df.shape)\n\n# Fit a Random Forest model to predict global sales\n# (This will run a small grid search and print metrics)\nmodel = rf_fit(final_df, 'Global_Sales')\n\n# Quick plots (shows matplotlib windows in notebooks or interactive sessions)\nprint_genre_distribution(sales, 'Action', 'Global_Sales')\nprint_platform_distribution(sales, 'PS4', 'Global_Sales')\n\n\n\n\nThe package exposes a predict helper. In the current release the training path performs scaling internally but does not return the fitted StandardScaler. To use predict reliably you should ensure new data is prepared and scaled the same way as prepare_data did during training. If you need a prediction pipeline (model + scaler), adapt rf_fit to return the scaler alongside the model or scale new observations with the same transformation used at training time.\n\n\n\n\n\nSee the package source for implementation details: src/stat386_final\nIf you want, I can: add a train_pipeline that returns (model, scaler), add notebook examples, or run a quick import test in this environment."
+    "text": "This short tutorial shows common workflows: reading the bundled data, processing it, training the Random Forest model, and plotting basic distributions.\n\n\nInstall the package in editable mode (for development) or normally:\npip install -e .\n# or\npip install .\n\n\n\nCopy the following into a Python session or script.\nfrom importlib.resources import files\nfrom stat386_final import (\n    read_data,\n    process_data,\n    prepare_data,\n    rf_fit,\n    print_genre_distribution,\n    print_platform_distribution,\n    __version__,\n)\n\nprint('stat386_final version:', __version__)\n\n# Load the bundled example dataset\nsales = read_data(\"game_data.csv\")\nprint(sales.shape)\nprint(list(sales.columns)[:10])\n\n# Process and prepare for modeling\nsales_combined = process_data(sales)\nfinal_df = prepare_data(sales_combined)\nprint('Prepared dataset shape:', final_df.shape)\n\n# Fit a Random Forest model to predict global sales\n# (This will run a small grid search and print metrics)\n# `rf_fit` returns a tuple `(best_model, scaler)` — keep the scaler\n# to use when scaling new data for `predict()`.\nbest_model, scaler = rf_fit(final_df, 'Global_Sales')\n\n# Quick plots (shows matplotlib windows in notebooks or interactive sessions)\nprint_genre_distribution(sales, 'Action', 'Global_Sales')\nprint_platform_distribution(sales, 'PS4', 'Global_Sales')\n\n# Example: making predictions on new data (use the returned `scaler`)\n# preds = predict(best_model, area='Global_Sales', new_data=new_X, scaler=scaler)\n\n# Predict\nnew_data = final_df.drop(columns=[\"Global_Sales\"]).iloc[:5]\npreds = predict(best_model, area=\"Global_Sales\", new_data=new_data, scaler=scaler)\nprint(preds)"
   },
   {
     "objectID": "Tutorial.html#install",
@@ -137,20 +137,6 @@
     "href": "Tutorial.html#quickstart-python",
     "title": "Getting Started",
     "section": "",
-    "text": "Copy the following into a Python session or script.\nfrom importlib.resources import files\nfrom stat386_final import (\n    read_data,\n    process_data,\n    prepare_data,\n    rf_fit,\n    print_genre_distribution,\n    print_platform_distribution,\n    __version__,\n)\n\nprint('stat386_final version:', __version__)\n\n# Load the bundled example dataset\ndata_path = files(\"stat386_final\").joinpath(\"data/game_data.csv\")\nsales = read_data(data_path)\nprint(sales.shape)\nprint(list(sales.columns)[:10])\n\n# Process and prepare for modeling\nsales_combined = process_data(sales)\nfinal_df = prepare_data(sales_combined)\nprint('Prepared dataset shape:', final_df.shape)\n\n# Fit a Random Forest model to predict global sales\n# (This will run a small grid search and print metrics)\nmodel = rf_fit(final_df, 'Global_Sales')\n\n# Quick plots (shows matplotlib windows in notebooks or interactive sessions)\nprint_genre_distribution(sales, 'Action', 'Global_Sales')\nprint_platform_distribution(sales, 'PS4', 'Global_Sales')"
-  },
-  {
-    "objectID": "Tutorial.html#notes-about-predict",
-    "href": "Tutorial.html#notes-about-predict",
-    "title": "Getting Started",
-    "section": "",
-    "text": "The package exposes a predict helper. In the current release the training path performs scaling internally but does not return the fitted StandardScaler. To use predict reliably you should ensure new data is prepared and scaled the same way as prepare_data did during training. If you need a prediction pipeline (model + scaler), adapt rf_fit to return the scaler alongside the model or scale new observations with the same transformation used at training time."
-  },
-  {
-    "objectID": "Tutorial.html#where-to-go-next",
-    "href": "Tutorial.html#where-to-go-next",
-    "title": "Getting Started",
-    "section": "",
-    "text": "See the package source for implementation details: src/stat386_final\nIf you want, I can: add a train_pipeline that returns (model, scaler), add notebook examples, or run a quick import test in this environment."
+    "text": "Copy the following into a Python session or script.\nfrom importlib.resources import files\nfrom stat386_final import (\n    read_data,\n    process_data,\n    prepare_data,\n    rf_fit,\n    print_genre_distribution,\n    print_platform_distribution,\n    __version__,\n)\n\nprint('stat386_final version:', __version__)\n\n# Load the bundled example dataset\nsales = read_data(\"game_data.csv\")\nprint(sales.shape)\nprint(list(sales.columns)[:10])\n\n# Process and prepare for modeling\nsales_combined = process_data(sales)\nfinal_df = prepare_data(sales_combined)\nprint('Prepared dataset shape:', final_df.shape)\n\n# Fit a Random Forest model to predict global sales\n# (This will run a small grid search and print metrics)\n# `rf_fit` returns a tuple `(best_model, scaler)` — keep the scaler\n# to use when scaling new data for `predict()`.\nbest_model, scaler = rf_fit(final_df, 'Global_Sales')\n\n# Quick plots (shows matplotlib windows in notebooks or interactive sessions)\nprint_genre_distribution(sales, 'Action', 'Global_Sales')\nprint_platform_distribution(sales, 'PS4', 'Global_Sales')\n\n# Example: making predictions on new data (use the returned `scaler`)\n# preds = predict(best_model, area='Global_Sales', new_data=new_X, scaler=scaler)\n\n# Predict\nnew_data = final_df.drop(columns=[\"Global_Sales\"]).iloc[:5]\npreds = predict(best_model, area=\"Global_Sales\", new_data=new_data, scaler=scaler)\nprint(preds)"
   }
 ]

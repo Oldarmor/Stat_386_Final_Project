@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.23">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Project summary, methodology, and findings placeholder">
+<meta name="description" content="An Anlysis on Video Game Sales">
 
 <title>Technical Report – website</title>
 <style>
@@ -38,7 +38,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-1fe81d0376b2c50856e68e651e390326.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-e31584831b205ffbb2d98406f31c2a5b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -150,7 +150,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div>
   <div class="description">
-    Project summary, methodology, and findings placeholder
+    An Anlysis on Video Game Sales
   </div>
 </div>
 
@@ -169,26 +169,36 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="executive-summary" class="level2">
 <h2 class="anchored" data-anchor-id="executive-summary">Executive Summary</h2>
-<p><em>TODO: Provide a concise overview of the project objectives, key findings, and actionable recommendations.</em></p>
+<p>The purpose of this project was to see what factors relate to a video games sales. We looked at a variety of factors including the consoles the video games were offered on, steam data base info on the player base size, and the year that the game was made. We found that the three most important factors for determining Global Sales are the platform the game was on (being on XBox 360 Was really important), the last thirty day player average and the all time peak number of players on that game.</p>
 </section>
 <section id="project-context" class="level2">
 <h2 class="anchored" data-anchor-id="project-context">Project Context</h2>
-<p><em>TODO: Describe the motivation, stakeholders, and success criteria for this analysis.</em></p>
+<p>Really the big motivation behind this analysis was to see what criteria really lead to a successful game. We measured our success on our ability to predict and better understand the relationship between variables like the games genre, year, platforms and player base size effect the number of copies a game sells.</p>
 </section>
 <section id="data-sources" class="level2">
 <h2 class="anchored" data-anchor-id="data-sources">Data Sources</h2>
-<ul>
-<li><em>Primary dataset:</em> <a href="https://zenodo.org/records/5898311">VG Sales Data</a></li>
-<li><em>Supplementary data:</em> <code>Scraped player data from Steam using a</code><a href="https://github.com/solsticegamestudios/steam">Github Repo</a>.<code>Because of the lengthy time scraping the data took, we have a file of how we scraped it and the scraped csv in the package.</code></li>
-</ul>
+<p>We merge two data sets together in order to get the final data set. The first data set is a csv file that contains thousands of games and their platforms and their sales. This data set can be found <a href="https://zenodo.org/records/5898311">here</a>. The second data set used a web scraper to scrape player base information off of the steam data base and can be found in <a href="https://github.com/Oldarmor/Stat_386_Final_Project/tree/main/Data_analysis">this repository</a>.</p>
 </section>
 <section id="methodology" class="level2">
 <h2 class="anchored" data-anchor-id="methodology">Methodology</h2>
 <ol type="1">
-<li><em>Data acquisition:</em> <code>TODO - outline collection scripts/APIs</code></li>
-<li><em>Cleaning pipeline:</em> <code>TODO - summarize transformations and validations implemented</code></li>
-<li><em>Analysis workflow:</em> <code>TODO - describe statistical or modeling techniques</code></li>
-<li><em>Tooling:</em> <code>TODO - list packages, environments, and reproducibility steps</code></li>
+<li><em>Data acquisition:</em> Luckily the video game sales data was already in the form of a csv, but getting the steam player base data was a little more complicated. In steam each game is referred to by a game id, not their actual name, so in order to get information on as many games as possible we made a call to the steam API and got 50,000 different game ids. Of those 50,000 game ids we merged that with our original game sales data and only kept games that we had an game id for. Then for each game with a game id we pulled the information for the respective game off of steamcharts.com and scraped the data off of there to get the player base size and the average number of players on the game within the last 30 days.</li>
+<li><em>Cleaning pipeline:</em> Once the data was pulled each game was in the data set multiple times because it was in the data set once for each console it was released on. So for our analysis we just aggregated the games so each game was only in the data set once and summed their total sales across consoles. Then we encoded the consoles that a specific game was on with just binary indicators. This allowed us to see the effect that different consoles have on a games sales.</li>
+<li><em>Analysis workflow:</em> We used a Random Forest model to train and fit the data, allowing us to make predictions about new games and see which features are most important in modeling a games sales.</li>
+<li><em>Tooling:</em> We used a variety of different packages for each step of the process below is a list of the step and which packages were used for that step: Data Acquisition &amp; Webscraping:
+<ul>
+<li>Pandas (for Data Frame Manipulation)</li>
+<li>Numpy (for math)</li>
+<li>Requests (to access the web)</li>
+<li>BeautifulSoup (for HTML parsing)</li>
+<li>TQDM (for progress bar on webscraping) Cleaning and Analysis:</li>
+<li>Pandas (for Data Frame manipulation)</li>
+<li>Numpy (for math)</li>
+<li>Seaborn (for charts)</li>
+<li>Matplotlib (for charts)</li>
+<li>Scikitlearn (for the binary console indicators) Modeling:</li>
+<li>Scikitlearn (for the model, scaler, splitting into train and test, and model evaluation metrics)</li>
+</ul></li>
 </ol>
 </section>
 <section id="results-diagnostics" class="level2">
@@ -207,12 +217,12 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="interpretation" class="level3">
 <h3 class="anchored" data-anchor-id="interpretation">Interpretation:</h3>
-<p>Rank is the most influential predictor, followed by platform-specific indicators and recent activity metrics (last_30_day_avg). Genre features did not appear in the top 10, suggesting platform and ranking dominate sales prediction.</p>
+<p>After training and tuning the model it found that rank was the most important followed by the game being on the Xbox 360, then last 30 day average and finally all time peak players. It makes sense that the model relied heavily on the rank because the data set did rank the games on number of sales, but furthermore it seams that what really matters in the platform (specifically being on Xbox 360) and then the player base size.</p>
 </section>
 </section>
 <section id="discussion-next-steps" class="level2">
 <h2 class="anchored" data-anchor-id="discussion-next-steps">Discussion &amp; Next Steps</h2>
-<p><em>TODO: Interpret the results, note limitations, and capture open questions or future experiments.</em></p>
+<p>Because of the limited data we were able to collect on game specifics(game price, length, mechanics, etc…) we are unable to make concrete inference on what makes a video game successful. Further data collection and research is necessary to make specific recommendations for video game design. That research could include things like budget spent on the game, years in development, and an indicator if the game is a part of a series (as opposed to a stand alone game). Regardless our analysis still offers some insights, suggesting that player count is a good indicator of a games financial success.</p>
 
 
 </section>
