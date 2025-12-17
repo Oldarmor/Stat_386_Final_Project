@@ -12,7 +12,7 @@ Top-level API:
 """
 
 # Semantic version (update as you release)
-__version__ = "0.1.14"
+__version__ = "0.2.0"
 
 # Import and re-export the public API
 from .read import read_data

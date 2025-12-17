@@ -36,8 +36,7 @@ from stat386_final import (
 print('stat386_final version:', __version__)
 
 # Load the bundled example dataset
-data_path = files("stat386_final").joinpath("data/game_data.csv")
-sales = read_data(data_path)
+sales = read_data("game_data.csv")
 print(sales.shape)
 print(list(sales.columns)[:10])
 
@@ -58,4 +57,9 @@ print_platform_distribution(sales, 'PS4', 'Global_Sales')
 
 # Example: making predictions on new data (use the returned `scaler`)
 # preds = predict(best_model, area='Global_Sales', new_data=new_X, scaler=scaler)
+
+# Predict
+new_data = final_df.drop(columns=["Global_Sales"]).iloc[:5]
+preds = predict(best_model, area="Global_Sales", new_data=new_data, scaler=scaler)
+print(preds)
 ```

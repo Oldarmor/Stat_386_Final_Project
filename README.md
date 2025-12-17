@@ -54,22 +54,21 @@ from your_package import (
 )
 
 # 1) Read
-data = read_data("data/sales.csv")
+data = sf.read_data("game_data.csv")
 
 # 2) Process & Prepare
-sales_combined = process_data(data)
-final_df = prepare_data(sales_combined)
-
+sales_combined = sf.process_data(data)
+final_df = sf.prepare_data(sales_combined)
 # 3) Visualize
-print_genre_distribution(data, genre="Action", area="Global_Sales")
-print_platform_distribution(data, platform="PS4", area="Global_Sales")
+sf.print_genre_distribution(data, genre="Action", area="Global_Sales")
+sf.print_platform_distribution(data, platform="PS4", area="Global_Sales")
 
 # 4) Train model
-best_model = rf_fit(final_df, area="Global_Sales")
+best_model, scaler = sf.rf_fit(final_df, area="Global_Sales")
 
 # 5) Predict
 new_data = final_df.drop(columns=["Global_Sales"]).iloc[:5]
-preds = predict(best_model, area="Global_Sales", new_data=new_data)
+preds = sf.predict(best_model, area="Global_Sales", new_data=new_data, scaler=scaler)
 print(preds)
 ```
 
