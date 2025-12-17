@@ -1,6 +1,6 @@
 ---
 title: "Technical Report"
-description: "Project summary, methodology, and findings placeholder"
+description: "An Anlysis on Video Game Sales"
 ---
 
 ## Executive Summary
