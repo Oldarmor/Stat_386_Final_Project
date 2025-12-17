@@ -8,7 +8,6 @@ from sklearn.metrics import r2_score, mean_squared_error
 def rf_fit(final_df, area):
     """Fits Random Forest model and returns the best model."""
     cols_drop = [col for col in final_df.columns if 'Sales' in col]
-    cols_drop.append('Rank')
     x = final_df.drop(columns = cols_drop)
     y = np.log1p(final_df[area])
 

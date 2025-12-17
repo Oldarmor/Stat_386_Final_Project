@@ -1,0 +1,3 @@
+recursive-include src/stat386_final/data *
+include README.md
+include LICENSE

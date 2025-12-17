@@ -8,7 +8,9 @@ def get_data_path(filename: str):
 
 def read_data(file_path):
     """Reads data from a given file path as a csv."""
-    sales = pd.read_csv(file_path)
+    filename = get_data_path(file_path)
+
+    sales = pd.read_csv(filename)
     sales['Year'] = sales['Year'].astype('Int64')
     # Some CSVs may not include an index column named 'Unnamed: 0'. Drop it only if present.
     if 'Unnamed: 0' in sales.columns:
